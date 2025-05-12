@@ -1,35 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css';
+import { Home } from './pages/Home/Home';
+import { AgrotisHeader } from './components/AgrotisHeader/AgrotisHeader';
+import CadastroFazenda from './pages/CadastroFazendaAnalise/CadastroFazenda';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AgrotisThemeProvider } from './context/AgrotisThemeContext/AgrotisThemeContext';
+import ListagemAnalises from './pages/ListagemAnalises/ListagemAnalise';
+import { AgendamentoAnaliseProvider } from './context/AgendamentoAnaliseContext/AgendamentoAnaliseContext';
+import EdicaoAgendamentoPage from './pages/EdicaoFazendaAnalise/EdicaoFazendaAnalise';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <AgrotisThemeProvider>
+      <AgendamentoAnaliseProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <BrowserRouter>
+            <AgrotisHeader />
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/cadastro" element={<CadastroFazenda />} />
+              <Route path="/listagem" element={<ListagemAnalises />} />
+              <Route path="/edicao/:id" element={<EdicaoAgendamentoPage />} />
+            </Routes>
+          </BrowserRouter>
+        </LocalizationProvider>
+      </AgendamentoAnaliseProvider>
+    </AgrotisThemeProvider>
+  );
+};
 
-export default App
+export default App;
