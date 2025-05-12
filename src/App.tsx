@@ -9,6 +9,7 @@ import { AgrotisThemeProvider } from './context/AgrotisThemeContext/AgrotisTheme
 import ListagemAnalises from './pages/ListagemAnalises/ListagemAnalise';
 import { AgendamentoAnaliseProvider } from './context/AgendamentoAnaliseContext/AgendamentoAnaliseContext';
 import EdicaoAgendamentoPage from './pages/EdicaoFazendaAnalise/EdicaoFazendaAnalise';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           </BrowserRouter>
         </LocalizationProvider>
       </AgendamentoAnaliseProvider>
+      <ToastContainer />
     </AgrotisThemeProvider>
   );
 };

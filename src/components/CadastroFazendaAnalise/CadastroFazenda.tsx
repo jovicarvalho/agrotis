@@ -19,6 +19,7 @@ import AgrotisBox from '../../components/AgrotisBox';
 import { useAgendamentoAnalise } from '../../context/AgendamentoAnaliseContext/AgendamentoAnaliseContext';
 import type { FormData } from '../../types/agendamentoAnalise/agendamentoAnalise.type';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const CadastroFazenda = () => {
   const { salvar } = useAgendamentoAnalise();
@@ -37,7 +38,7 @@ const CadastroFazenda = () => {
 
   const onSubmit = (data: FormData) => {
     salvar(data);
-    navigate('/listagem');
+    navigate('/listagem', { state: { sucesso: true } });
   };
 
   return (

@@ -19,14 +19,17 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import type { ListagemProps } from './AgrotisListagem.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AgrotisBox from '../AgrotisBox';
 import { useAgendamentoAnalise } from '../../context/AgendamentoAnaliseContext/AgendamentoAnaliseContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
 export const ListaRegistros = ({ agendamentos }: ListagemProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { deletar } = useAgendamentoAnalise();
 
   const [openModal, setOpenModal] = useState(false);
@@ -73,11 +76,31 @@ export const ListaRegistros = ({ agendamentos }: ListagemProps) => {
     setOpen(true);
   };
 
+  useEffect(() => {
+    if (location.state?.sucesso) {
+      toast.success('Salvo com sucesso', {
+        position: 'top-center',
+        autoClose: 5000,
+        theme: 'colored',
+      });
+    }
+  }, [location.state]);
+
   const confirmarDelete = () => {
     if (selectedId) {
+      setOpen(false);
       deletar(selectedId);
+      toast.success('Agendamento excluído', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+      });
     }
-    setOpen(false);
     setSelectedId(null);
   };
 
